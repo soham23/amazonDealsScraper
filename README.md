@@ -8,7 +8,6 @@ python main.py
 <br/><br/>
 
 <b>To Do List</b><br/>
-<i>Add command line option 'to text file'</i><br/>
 <i>Add command line option 'to csv file'</i><br/>
 <i>Add command line option 'sort'</i><br/>
 <i>Add option to use other Amazon sites</i><br/>
