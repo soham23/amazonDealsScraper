@@ -1,6 +1,15 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
-import sys
+import argparse
+
+textFile = [False,None]
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--text_file", "-t", help="Store deals in a text file.")
+args = parser.parse_args()
+if(args.text_file):
+    textFile[0] = True
+    textFile[1] = args.text_file
 
 urls = ["https://www.amazon.in/gp/goldbox"]
 browser = webdriver.Chrome()
@@ -10,9 +19,9 @@ htmlBody = browser.execute_script("return document.body.innerHTML")
 
 browser.quit()
 
+dealsList = [["Product","Price","MRP","Discount"]]
 soup = BeautifulSoup(htmlBody,"html.parser")
 
-print("%-100s %10s %10s %5s"%("Product","Price","MRP","Discount"))
 i=0
 while(i<50):
     try:
@@ -36,12 +45,17 @@ while(i<50):
         percentClaimed = " ".join(percentClaimed[:percentClaimed.index("%")+1].split())
         discountPercent = discountPercent[discountPercent.index("(")+1:discountPercent.index("%")+1]
 
-        # print([name,price,mrp,discountPercent,percentClaimed,primeEarlyAccess])
-        # print(name,price,mrp,discountPercent,percentClaimed,primeEarlyAccess)
-        print("%-100s %10s %10s %5s"%(name, price, mrp, discountPercent))
-        # print(price, mrp)
+        dealsList.append([name, price, mrp, discountPercent])
     
     except:
         break
-
     i+=1
+
+for name, price, mrp, discountPercent in dealsList:
+    print("%-100s %10s %10s %5s"%(name, price, mrp, discountPercent))
+
+if(textFile[0]):
+    with open(textFile[1], "w", encoding="utf-8") as aFile:
+        for name, price, mrp, discountPercent in dealsList:
+            aFile.write("%s\t%s\t%s\t%s\n"%(name, price, mrp, discountPercent))
+
