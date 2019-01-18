@@ -6,8 +6,3 @@ It grabs lightning deals from Amazon India and displays them.
 <b>How to use?</b><br/>
 python main.py
 <br/><br/>
-
-<b>To Do List</b><br/>
-<i>Add command line option 'to csv file'</i><br/>
-<i>Add command line option 'sort'</i><br/>
-<i>Add option to use other Amazon sites</i><br/>
